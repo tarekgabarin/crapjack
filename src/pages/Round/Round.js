@@ -23,11 +23,11 @@ function Round() {
         })
 
         return (
-            <section className={'mh7-l mh7-m mh0-s'}>
+            <section className={'mh7-ns mh0'}>
 
                 <div className="flex flex-column">
 
-                    <div className="flex w-100 pa2-ns justify-center">
+                    <div className="flex w-100 w-100-ns pa1 pa2-ns justify-center">
                         <Card image={state.houseCardImageUrl} value={'1'} />
                         <Card image={state.houseCardImageUrl} value={'10'} />
                         <Card image={state.houseCardImageUrl} value={'A'} />
@@ -38,7 +38,7 @@ function Round() {
                         <h1 className={'f1 tc'}>Player</h1>
                     </div>
 
-                    <div className="flex w-100 mb4-ns pa2-ns justify-center">
+                    <div className="flex w-100 w-100-ns pa1 mb4-ns pa2-ns justify-center">
                         <Card image={"https://deckofcardsapi.com/static/img/KH.png"} value={'1'} />
                         <Card image={"https://deckofcardsapi.com/static/img/KH.png"} value={'10'} />
                         <Card image={"https://deckofcardsapi.com/static/img/KH.png"}  value={'A'} />
