@@ -5,7 +5,7 @@ import Round from './pages/Round/Round'
 function App() {
   return (
     <div>
-        <Round/>
+        <HomeScreen />
     </div>
   );
 }
