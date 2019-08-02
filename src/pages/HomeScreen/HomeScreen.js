@@ -2,6 +2,13 @@ import React from 'react';
 
 function HomeScreen(props) {
 
+
+    function goToRound(event) {
+        event.preventDefault();
+        props.history.push('/round');
+    }
+
+
     return (
         <section className={'mh7-l mh7-m'}>
 
@@ -17,7 +24,7 @@ function HomeScreen(props) {
                 <div>
                     <div className="flex justify-around">
                         <div>
-                            <a className="f4 dim link ba dib pa2 dark-blue">
+                            <a onClick={goToRound} className="f4 dim link ba dib pa2 dark-blue">
                                 Play Round
                             </a>
                         </div>

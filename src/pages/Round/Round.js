@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import Card from '../../components/Card/Card'
 
-class Round extends Component {
-    render() {
+function Round() {
+
         return (
             <section className={'mh7-l mh7-m'}>
 
@@ -39,7 +39,7 @@ class Round extends Component {
 
             </section>
         );
-    }
+
 }
 
 export default Round;
