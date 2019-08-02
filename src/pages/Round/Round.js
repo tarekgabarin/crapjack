@@ -19,8 +19,12 @@ function Round() {
                 'K': [10],
                 'Q': [10]
             },
-            houseCardImageUrl:'https://upload.wikimedia.org/wikipedia/commons/5/54/Card_back_06.svg'
-        })
+            houseCardImageUrl:'https://upload.wikimedia.org/wikipedia/commons/5/54/Card_back_06.svg',
+            gameInSession: true,
+            playerWon: null,
+            houseDeck: [],
+            playerDeck: []
+        });
 
         return (
             <section className={'mh7-ns mt1-ns mt4'}>
