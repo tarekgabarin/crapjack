@@ -23,7 +23,7 @@ function Round() {
         })
 
         return (
-            <section className={'mh7-ns mh0'}>
+            <section className={'mh7-ns mt1-ns mt4'}>
 
                 <div className="flex flex-column">
 
@@ -35,7 +35,7 @@ function Round() {
 
 
                     <div className="mb1">
-                        <h1 className={'f1 tc'}>Player</h1>
+                        <h1 className={'f1 tc'}>Game In Session</h1>
                     </div>
 
                     <div className="flex w-100 w-100-ns pa1 mb4-ns pa2-ns justify-center">
