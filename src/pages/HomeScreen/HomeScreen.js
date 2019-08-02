@@ -1,7 +1,7 @@
 import React from 'react';
 
 function HomeScreen(props) {
-    
+
     return (
         <section className="hero is-success is-fullheight">
             <div className="hero-body">
