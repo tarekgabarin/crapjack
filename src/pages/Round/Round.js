@@ -1,7 +1,25 @@
-import React, {Component} from 'react';
+import React, {useState} from 'react';
 import Card from '../../components/Card/Card'
 
 function Round() {
+
+        const [state, setState] = useState({
+            cardValuesMaps: {
+                'A': [1, 11],
+                '2': [2],
+                '3': [3],
+                '4': [4],
+                '5': [5],
+                '6': [6],
+                '7': [7],
+                '8': [8],
+                '9': [9],
+                '10': [10],
+                'J': [10],
+                'K': [10],
+                'Q': [10]
+            }
+        })
 
         return (
             <section className={'mh7-l mh7-m'}>
@@ -13,9 +31,9 @@ function Round() {
                     </div>
 
                     <div className="flex pa2 outline justify-center">
-                        <Card value={'1'} />
-                        <Card value={'10'} />
-                        <Card value={'A'} />
+                        <Card image={"https://deckofcardsapi.com/static/img/KH.png"} value={'1'} />
+                        <Card image={"https://deckofcardsapi.com/static/img/KH.png"} value={'10'} />
+                        <Card image={"https://deckofcardsapi.com/static/img/KH.png"} value={'A'} />
                     </div>
 
 
@@ -24,9 +42,9 @@ function Round() {
                     </div>
 
                     <div className="flex mb4 pa2 outline justify-center">
-                        <Card value={'1'} />
-                        <Card value={'10'} />
-                        <Card value={'A'} />
+                        <Card image={"https://deckofcardsapi.com/static/img/KH.png"} value={'1'} />
+                        <Card image={"https://deckofcardsapi.com/static/img/KH.png"} value={'10'} />
+                        <Card image={"https://deckofcardsapi.com/static/img/KH.png"}  value={'A'} />
                     </div>
 
 

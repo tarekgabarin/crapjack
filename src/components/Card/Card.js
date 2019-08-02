@@ -1,9 +1,9 @@
 import React from 'react';
 
-function Card({value}) {
+function Card({image, value}) {
     return (
-        <div className={'ba b--near-black mh4 br2 pa5 w-30-s mw5'} >
-                <h1 className={'f1 lh-copy'}>{value}</h1>
+        <div style={{backgroundImage: "url(" + image + ")"}} className={'ba contain bg-center h5 b--near-black mh4 br2 pa5 w-30 w-30-s mw5'} >
+
         </div>
     );
 }
