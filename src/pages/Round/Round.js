@@ -1,11 +1,12 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Card from '../../components/Card/Card'
+import {shuffleCards, drawCards} from "../../utils/api";
 
 function Round() {
 
         const [state, setState] = useState({
             cardValuesMaps: {
-                'A': [1, 11],
+                'ACE': [1, 11],
                 '2': [2],
                 '3': [3],
                 '4': [4],
@@ -15,16 +16,62 @@ function Round() {
                 '8': [8],
                 '9': [9],
                 '10': [10],
-                'J': [10],
-                'K': [10],
-                'Q': [10]
+                'JACK': [10],
+                'KING': [10],
+                'QUEEN': [10]
             },
             houseCardImageUrl:'https://upload.wikimedia.org/wikipedia/commons/5/54/Card_back_06.svg',
             gameInSession: true,
             playerWon: null,
-            houseDeck: [],
-            playerDeck: []
+            houseCards: [],
+            playerCards: [],
+            deckId: null
         });
+
+        ///// Upon the page mounting, use the cards API to get the deck of cards, and draw cards for the player and house.
+        useEffect(() => {
+
+            /// API call to get the Deck ID
+            shuffleCards(1)
+                .then(response => response.json())
+                .then(data => {
+
+                    const deckId = data.deck_id;
+
+                    /// API call to draw the cards
+                    drawCards(deckId, 6)
+                        .then(response1 => response1.json())
+                        .then(cardsResponse => {
+
+                            /// Equally distribute cards to House and the Player
+                            const cards = cardsResponse.cards;
+                            const halfOfCardsSize = Math.floor(cards.length / 2);
+                            const playerCards = cards.slice(0, halfOfCardsSize);
+                            const houseCards = cards.slice(halfOfCardsSize, cards.length);
+
+                            setState({
+                                ...state,
+                                playerCards,
+                                houseCards,
+                                deckId
+                            })
+
+                        }).catch(err => {
+                            if (err) {
+                                throw err;
+                            }
+                        });
+
+
+                })
+                .catch(err => {
+                if (err){
+                    throw err;
+                }
+            })
+
+
+        }, []);
 
         return (
             <section className={'mh7-ns mt1-ns mt4'}>
