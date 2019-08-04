@@ -190,7 +190,7 @@ function Round() {
                 //In the small chance that both the player and house have the exact value of 21
                 if (playersOptimalValueOfCards === housesOptimalValueOfCards) {
 
-                    /// If its a tie then the player wins.
+                    /// Player and House are tied.
                     setState({
                         ...state,
                         playerWon: false,

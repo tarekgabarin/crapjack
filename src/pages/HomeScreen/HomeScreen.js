@@ -8,6 +8,11 @@ function HomeScreen(props) {
         props.history.push('/round');
     }
 
+    function goToInfoPage(event) {
+        event.preventDefault();
+        props.history.push('/info');
+    }
+
 
     return (
         <section className={'mh7-l mh7-m mh3'}>
@@ -22,7 +27,7 @@ function HomeScreen(props) {
                             Jack
                         </h1>
                 </div>
-                
+
 
                 <div className={'mb2'}>
                     <a onClick={goToRound} className="f4 dim link ba dib pa2 black">
@@ -31,7 +36,7 @@ function HomeScreen(props) {
                 </div>
 
                 <div>
-                    <a className="f4 dim link ba dib pa2 dark-red">
+                    <a onClick={goToInfoPage} className="f4 dim link ba dib pa2 dark-red">
                         About Game
                     </a>
                 </div>
