@@ -10,33 +10,32 @@ function HomeScreen(props) {
 
 
     return (
-        <section className={'mh7-l mh7-m'}>
+        <section className={'mh7-l mh7-m mh3'}>
 
             <div className="flex flex-column">
 
-                <header className="tc ph4">
-                    <h1 className={'f1'}>
-                        BlackJack
+                <div className={'mb0'}>
+                    <h1 className={"f-headline mb0 lh-solid black"}>
+                        Black
                     </h1>
-                </header>
+                        <h1 className={"mt0 mb3 f-headline lh-solid dark-red"}>
+                            Jack
+                        </h1>
+                </div>
+                
 
+                <div className={'mb2'}>
+                    <a onClick={goToRound} className="f4 dim link ba dib pa2 black">
+                        Play Round
+                    </a>
+                </div>
 
                 <div>
-                    <div className="flex justify-around">
-                        <div>
-                            <a onClick={goToRound} className="f4 dim link ba dib pa2 dark-blue">
-                                Play Round
-                            </a>
-                        </div>
-
-                        <div>
-                            <a className="f4 dim link ba dib pa2 dark-green">
-                                About Game
-                            </a>
-                        </div>
-
-                    </div>
+                    <a className="f4 dim link ba dib pa2 dark-red">
+                        About Game
+                    </a>
                 </div>
+
 
             </div>
 
