@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import Card from '../../components/Card/Card'
 import {shuffleCards, drawCards} from "../../utils/api";
+import {intersectionTypeAnnotation} from "@babel/types";
 
 function Round() {
 
@@ -26,7 +27,8 @@ function Round() {
             gameTied: false,
             houseCards: [],
             playerCards: [],
-            deckId: null
+            deckId: null,
+            hasNetworkError: false
         });
 
         function prepareGame(){
@@ -61,7 +63,11 @@ function Round() {
 
                         }).catch(err => {
                         if (err) {
-                            throw err;
+                            console.log(err);
+                            setState({
+                                ...state,
+                                hasNetworkError: true
+                            })
                         }
                     });
 
@@ -69,7 +75,11 @@ function Round() {
                 })
                 .catch(err => {
                     if (err){
-                        throw err;
+                        console.log(err);
+                        setState({
+                            ...state,
+                            hasNetworkError: true
+                        })
                     }
                 })
 
@@ -292,7 +302,11 @@ function Round() {
 
                 })
                 .catch(err => {
-                    if (err) throw err;
+                    console.log(err);
+                    setState({
+                        ...state,
+                        hasNetworkError: true
+                    })
                 })
         }
 
@@ -340,7 +354,11 @@ function Round() {
                     }
                  }).catch(err => {
 
-                     if (err) throw err;
+                    console.log(err);
+                    setState({
+                        ...state,
+                        hasNetworkError: true
+                    })
 
                  })
 
@@ -388,7 +406,7 @@ function Round() {
             if(state.gameInSession){
                 return (
                     <div className="flex">
-                        <div className="w-50">
+                        <div className="w-50 mr1">
                             <button onClick={onHit} className="input-reset w-100 pa1 white h2 bg-black b--black br2">Hit</button>
                         </div>
                         <div className="w-50">
@@ -407,34 +425,44 @@ function Round() {
 
         const gameOptionsJSX = returnGameOptionsJSX();
 
-        return (
-            <section className={'mh7-ns mt1-ns mt4'}>
+        if(state.hasNetworkError){
+            return (
+                <section className={'mh7-ns mt1-ns mt4'} >
+                    <h1 className="tc f1">Internal Server Error :(</h1>
+                </section>
+            )
+        } else {
+            return (
+                <section className={'mh7-ns mt1-ns mt4'}>
 
-                <div className="flex flex-column">
+                    <div className="flex flex-column">
 
-                    <div className="flex w-100 w-100-ns pa1 pa2-ns justify-center">
-                        {housesHand}
+                        <div className="flex w-100 w-100-ns pa1 pa2-ns justify-center">
+                            {housesHand}
+                        </div>
+
+
+                        <div className="mb1">
+                            {gameStatusJSX}
+                        </div>
+
+                        <div className="flex w-100 w-100-ns pa1 mb4-ns pa2-ns justify-center">
+                            {playersHandJSX}
+                        </div>
+
+
+                        <div className={'mb2'}>
+                            {gameOptionsJSX}
+                        </div>
+
+
                     </div>
 
-
-                    <div className="mb1">
-                        {gameStatusJSX}
-                    </div>
-
-                    <div className="flex w-100 w-100-ns pa1 mb4-ns pa2-ns justify-center">
-                        {playersHandJSX}
-                    </div>
+                </section>
+            );
+        }
 
 
-                    <div className={'mb2'}>
-                        {gameOptionsJSX}
-                    </div>
-
-
-                </div>
-
-            </section>
-        );
 
 }
 
