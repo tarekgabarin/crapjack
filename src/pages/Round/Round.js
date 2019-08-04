@@ -29,8 +29,7 @@ function Round() {
             deckId: null
         });
 
-        ///// Upon the page mounting, use the cards API to get the deck of cards, and draw cards for the player and house.
-        useEffect(() => {
+        function prepareGame(){
 
             /// API call to get the Deck ID
             shuffleCards(1)
@@ -54,25 +53,40 @@ function Round() {
                                 ...state,
                                 playerCards,
                                 houseCards,
-                                deckId
+                                deckId,
+                                gameInSession: true,
+                                playerWon: null,
+                                gameTied: false,
                             })
 
                         }).catch(err => {
-                            if (err) {
-                                throw err;
-                            }
-                        });
+                        if (err) {
+                            throw err;
+                        }
+                    });
 
 
                 })
                 .catch(err => {
-                if (err){
-                    throw err;
-                }
-            })
+                    if (err){
+                        throw err;
+                    }
+                })
 
+        }
+
+        ///// Upon the page mounting, use the cards API to get the deck of cards, and draw cards for the player and house.
+        useEffect(() => {
+
+            prepareGame();
 
         }, []);
+
+        /// Rerun the code to prepare a game when player begins a new round
+        function onReplay(event) {
+            event.preventDefault();
+            prepareGame()
+        }
 
         function onReveal() {
 
@@ -230,6 +244,8 @@ function Round() {
 
         }
 
+
+
         function onHit(event) {
 
             event.preventDefault();
@@ -360,9 +376,9 @@ function Round() {
                 return (<h1 className={'f1 tc'}>Game In Session</h1>)
             } else {
 
-                const WinOrTieJSX = (state.gameTied) ? (<h1 className={'f1 tc'}>Game Tied</h1>) : (<h1 className={'f1 tc'}>You Win</h1>);
+                const WinOrTieJSX = (state.gameTied) ? (<h1 className={'f1 gold tc'}>Game Tied</h1>) : (<h1 className={'f1 dark-green tc'}>You Win</h1>);
 
-                return (state.playerWon) ? (WinOrTieJSX) : (<h1 className={'f1 tc'}>House Wins</h1>)
+                return (state.playerWon) ? (WinOrTieJSX) : (<h1 className={'f1 dark-red tc'}>House Wins</h1>)
             }
         };
 
@@ -382,7 +398,7 @@ function Round() {
                 )
             } else {
                 return (
-                    <button className={'input-reset pa1 h2 fw1 bg-black white ba w-100 b--black br2'}>Replay</button>
+                    <button onClick={onReplay} className={'input-reset pa1 h2 fw1 bg-black white ba w-100 b--black br2'}>Replay</button>
                 )
             }
         };
