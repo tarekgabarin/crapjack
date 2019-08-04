@@ -74,9 +74,8 @@ function Round() {
 
         }, []);
 
-        function reveal(event) {
+        function onReveal() {
 
-            event.preventDefault();
 
             const calculateTotalValueOfCards = (arrayOfCards, isSoftHand) => {
 
@@ -227,9 +226,108 @@ function Round() {
 
                 }
 
-
-
             }
+
+        }
+
+        function onHit(event) {
+
+            event.preventDefault();
+
+            drawCards(state.deckId, 1)
+                .then(response => response.json())
+                .then(cardsResponse => {
+
+                    let newPlayersCards = state.playerCards;
+
+                    let newCard =  cardsResponse.cards[0];
+
+                    newPlayersCards.unshift(newCard);
+
+                    setState({
+                        ...state,
+                        playerCards: newPlayersCards
+                    })
+
+                })
+                .then(() => {
+
+                    const totalValueOfPlayersSoftHand = state.playerCards.map(item => {
+                        return state.cardValuesMaps[item.value][0];
+                    }).reduce((total, num) => {
+                        return total + num
+                    }, 0);
+
+                    const totalValueOfPlayersHardHand = state.playerCards.map(item => {
+
+                        if (item.value === "ACE"){
+                            return state.cardValuesMaps[item.value][1];
+                        } else {
+                            return state.cardValuesMaps[item.value][0];
+                        }
+                    }).reduce((total, num) => {
+                        return total + num
+                    }, 0);
+
+                    /// If the players cards are at or exceed 21, then the game is over and the cards are revealed.
+                    if (totalValueOfPlayersSoftHand >= 21 && totalValueOfPlayersHardHand >= 21){
+                        onReveal()
+                    }
+
+                })
+                .catch(err => {
+                    if (err) throw err;
+                })
+        }
+
+        function onStand(event) {
+
+            event.preventDefault();
+
+            drawCards(state.deckId, 1)
+                .then(response => response.json())
+                .then(cardsResponse => {
+
+                    let newHouseCards = state.houseCards;
+
+                    let newCard =  cardsResponse.cards[0];
+
+                    newHouseCards.unshift(newCard);
+
+                    setState({
+                        ...state,
+                        houseCards: newHouseCards
+                    })
+
+                })
+                .then(() => {
+
+                    const totalValueOfHousesSoftHand = state.houseCards.map(item => {
+                        return state.cardValuesMaps[item.value][0];
+                    }).reduce((total, num) => {
+                        return total + num
+                    }, 0);
+
+                    const totalValueOfHousesHardHand = state.houseCards.map(item => {
+                        if (item.value === "ACE"){
+                            return state.cardValuesMaps[item.value][1];
+                        } else {
+                            return state.cardValuesMaps[item.value][0];
+                        }
+                    }).reduce((total, num) => {
+                        return total + num
+                    }, 0);
+
+                    /// If the Houses cards are at or exceed 17, then the game is over and the cards are revealed.
+                    if (totalValueOfHousesSoftHand >= 17 && totalValueOfHousesHardHand >= 17){
+                        onReveal()
+                    }
+                 }).catch(err => {
+
+                     if (err) throw err;
+
+                 })
+
 
         }
 
@@ -241,8 +339,7 @@ function Round() {
 
         const housesHandHidden = state.houseCards.map((item, index) => {
 
-            ///TODO change Index to 1 when implementing hit/stand functionality
-            const imageOfCard = (index === 1)  ? (state.houseCardImageUrl) : (item.image);
+            const imageOfCard = (index === state.houseCards.length - 1)  ? (state.houseCardImageUrl) : (item.image);
 
             return (
                 <Card image={imageOfCard} value={item.value} />
@@ -257,20 +354,42 @@ function Round() {
 
         const housesHand = (state.gameInSession) ? (housesHandHidden) : (houseHandRevealed);
 
-        ///TODO use this for now, will make a seperate page to show results
+        const returnGameStatusJSX = () => {
 
-        let resultsJSX;
+            if (state.playerWon === null){
+                return (<h1 className={'f1 tc'}>Game In Session</h1>)
+            } else {
 
-        if (state.playerWon === null){
-            resultsJSX = (<h1 className={'f1 tc'}>Game In Session</h1>)
-        } else {
+                const WinOrTieJSX = (state.gameTied) ? (<h1 className={'f1 tc'}>Game Tied</h1>) : (<h1 className={'f1 tc'}>You Win</h1>);
 
-            const WinOrTieJSX = (state.gameTied) ? (<h1 className={'f1 tc'}>Game Tied</h1>) : (<h1 className={'f1 tc'}>You Win</h1>)
-
-            resultsJSX = (state.playerWon) ? (WinOrTieJSX) : (<h1 className={'f1 tc'}>House Wins</h1>)
-        }
+                return (state.playerWon) ? (WinOrTieJSX) : (<h1 className={'f1 tc'}>House Wins</h1>)
+            }
+        };
 
 
+        const returnGameOptionsJSX = () => {
+
+            if(state.gameInSession){
+                return (
+                    <div className="flex">
+                        <div className="w-50">
+                            <button onClick={onHit} className="input-reset w-100 pa1 white h2 bg-black b--black br2">Hit</button>
+                        </div>
+                        <div className="w-50">
+                            <button onClick={onStand} className="input-reset w-100 pa1 h2 black bg-white b--black br2">Stand</button>
+                        </div>
+                    </div>
+                )
+            } else {
+                return (
+                    <button className={'input-reset pa1 h2 fw1 bg-black white ba w-100 b--black br2'}>Replay</button>
+                )
+            }
+        };
+
+        const gameStatusJSX = returnGameStatusJSX();
+
+        const gameOptionsJSX = returnGameOptionsJSX();
 
         return (
             <section className={'mh7-ns mt1-ns mt4'}>
@@ -283,7 +402,7 @@ function Round() {
 
 
                     <div className="mb1">
-                        {resultsJSX}
+                        {gameStatusJSX}
                     </div>
 
                     <div className="flex w-100 w-100-ns pa1 mb4-ns pa2-ns justify-center">
@@ -292,7 +411,7 @@ function Round() {
 
 
                     <div className={'mb2'}>
-                         <button onClick={reveal} className={'input-reset pa1 h2 fw1 bg-black white ba w-100 b--black br2'}>Reveal</button>
+                        {gameOptionsJSX}
                     </div>
 
 
