@@ -1,4 +1,5 @@
 import React from 'react';
+import BlackJackValuesImage from '../../assets/images/Blackjack_Values.png';
 
 
 function InfoPage() {
@@ -21,7 +22,7 @@ function InfoPage() {
 
             <div className="flex justify-center">
                 <div>
-                    <img className={'br2'} src="https://www.blackjack.org/wp-content/uploads/2018/12/Blackjack-values-705x396.png" alt=""/>
+                    <img className={'br2'} src={BlackJackValuesImage} alt=""/>
                 </div>
             </div>
 

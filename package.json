@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "bulma": "^0.7.5",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.1",
@@ -16,7 +15,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "css": "tachyons src/css/app.css > src/index.css --minify",
+    "css": "tachyons src/css/app.css > src/assets/css/tachyons.min.css --minify",
     "prestart": "npm run css",
     "prebuild": "npm run css"
   },

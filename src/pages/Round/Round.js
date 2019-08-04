@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import Card from '../../components/Card/Card'
 import {shuffleCards, drawCards} from "../../utils/api";
-import {intersectionTypeAnnotation} from "@babel/types";
+import CardBackImage from '../../assets/images/Card_Back.svg';
 
 function Round() {
 
